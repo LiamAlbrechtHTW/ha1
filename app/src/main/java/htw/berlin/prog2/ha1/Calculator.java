@@ -46,8 +46,7 @@ public class Calculator {
      */
     public void pressClearKey() {
         screen = "0";
-        latestOperation = "";
-        latestValue = 0.0;
+        // latestValue und latestOperator aus dem Clear gelöscht und somit bleibt der Operator zwischengepeichert.
     }
 
     /**
@@ -124,6 +123,7 @@ public class Calculator {
             case "x" -> latestValue * Double.parseDouble(screen);
             case "/" -> latestValue / Double.parseDouble(screen);
             default -> throw new IllegalArgumentException();
+
         };
         screen = Double.toString(result);
         if(screen.equals("Infinity")) screen = "Error";
