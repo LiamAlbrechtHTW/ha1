@@ -14,6 +14,8 @@ public class Calculator {
 
     private String latestOperation = "";
 
+    private boolean isClearKeyPressed = false;
+
     private double lastOperand; // wichtig, um bei erneuter = Eingabe den zweiten Operant zu nutzen und nicht den ersten
 
     /**
@@ -47,9 +49,16 @@ public class Calculator {
      * im Ursprungszustand ist.
      */
     public void pressClearKey() {
-        screen = "0";
-        // latestValue und latestOperator aus dem Clear gelöscht und somit bleibt der Operator zwischengepeichert.
-    }
+        if(isClearKeyPressed == false) {
+            screen = "0";
+            // latestValue und latestOperator aus dem Clear gelöscht und somit bleibt der Operator zwischengepeichert.
+            isClearKeyPressed = true; // damit vermerkt ist, dass die Tatses bereits gedrückt wurde.
+        } else {
+            screen = "0";
+            latestValue = 0.0;
+            latestOperation = "";
+        } // Credit an Hans Kircheisen, weil ich Vorher keine funktionierende CE Taste mehr hatte.
+        }
 
     /**
      * Empfängt den Wert einer gedrückten binären Operationstaste, also eine der vier Operationen
@@ -120,7 +129,7 @@ public class Calculator {
      */
     public void pressEqualsKey() {
 
-        if(lastOperand == 0.0 && !latestOperation.isEmpty()){
+        if(lastOperand == 0.0){
             lastOperand = Double.parseDouble(screen); //Standartmäßig ist lastOprand 0, nach einer Eingabe, soll diese vom Screen als last Operand genommen werden
         }
 
@@ -139,5 +148,4 @@ public class Calculator {
         if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
     }
-
 }
