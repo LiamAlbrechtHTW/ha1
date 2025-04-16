@@ -14,6 +14,8 @@ public class Calculator {
 
     private String latestOperation = "";
 
+    private double lastOperand; // wichtig, um bei erneuter = Eingabe den zweiten Operant zu nutzen und nicht den ersten
+
     /**
      * @return den aktuellen Bildschirminhalt als String
      */
@@ -117,14 +119,21 @@ public class Calculator {
      * und das Ergebnis direkt angezeigt.
      */
     public void pressEqualsKey() {
-        var result = switch(latestOperation) {
-            case "+" -> latestValue + Double.parseDouble(screen);
-            case "-" -> latestValue - Double.parseDouble(screen);
-            case "x" -> latestValue * Double.parseDouble(screen);
-            case "/" -> latestValue / Double.parseDouble(screen);
+
+        if(lastOperand == 0.0 && !latestOperation.isEmpty()){
+            lastOperand = Double.parseDouble(screen); //Standartmäßig ist lastOprand 0, nach einer Eingabe, soll diese vom Screen als last Operand genommen werden
+        }
+
+        var result = switch(latestOperation) { // Es wird immer der letzte Operand und nicht der erste für die Rechnung genutzt
+            case "+" -> latestValue + lastOperand;
+            case "-" -> latestValue - lastOperand;
+            case "x" -> latestValue * lastOperand;
+            case "/" -> latestValue / lastOperand;
             default -> throw new IllegalArgumentException();
 
         };
+
+        latestValue = result; // damit immer mit dem neuen Ergebnis der letzte Operand genutzt wird und nicht immer die selbe Rechnung durchgeführt wird
         screen = Double.toString(result);
         if(screen.equals("Infinity")) screen = "Error";
         if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
