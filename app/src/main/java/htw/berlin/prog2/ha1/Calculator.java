@@ -52,7 +52,7 @@ public class Calculator {
         if(isClearKeyPressed == false) {
             screen = "0";
             // latestValue und latestOperator aus dem Clear gelöscht und somit bleibt der Operator zwischengepeichert.
-            isClearKeyPressed = true; // damit vermerkt ist, dass die Tatses bereits gedrückt wurde.
+            isClearKeyPressed = true; // damit vermerkt ist, dass die Taste bereits gedrückt wurde.
         } else {
             screen = "0";
             latestValue = 0.0;
@@ -128,9 +128,9 @@ public class Calculator {
      * und das Ergebnis direkt angezeigt.
      */
     public void pressEqualsKey() {
-
+        // Gedanken anstoß ChatGPT
         if(lastOperand == 0.0){
-            lastOperand = Double.parseDouble(screen); //Standartmäßig ist lastOprand 0, nach einer Eingabe, soll diese vom Screen als last Operand genommen werden
+            lastOperand = Double.parseDouble(screen); //Standartmäßig ist lastOperand 0, nach einer Eingabe, soll diese vom Screen als last Operand genommen werden
         }
 
         var result = switch(latestOperation) { // Es wird immer der letzte Operand und nicht der erste für die Rechnung genutzt
